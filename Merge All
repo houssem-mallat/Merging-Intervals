@@ -1,0 +1,50 @@
+class Solution {
+
+    public int[][] merge(int[][] intervals) {
+    
+        List<int[]> res = new ArrayList<int[]>();
+        List<int[]> sList = new ArrayList<int[]>();
+        
+        for(int[] a:intervals)sList.add(a);
+        Collections.sort(sList, byBegDt);
+        
+        for(int i = 0;i<sList.size();i++){
+        
+            int[] tmp = sList.get(i);
+            
+            while(i<intervals.length-1 && tmp[1]>=sList.get(i+1)[0]){
+            
+                i++;
+                int[] tmp1 = sList.get(i);
+                tmp[0]=Math.min(tmp1[0],tmp[0]);
+                tmp[1]=Math.max(tmp1[1],tmp[1]);  
+                
+            } 
+            
+            res.add(tmp);          
+        }
+        
+        int[][] resAr = new int[res.size()][2];
+        int i=0;
+        
+        for(int[] ar : res){
+        
+            resAr[i] = ar;
+            i++;
+            
+        }
+        
+        return resAr;
+    }
+    
+    Comparator<int[]> byBegDt = new Comparator<int[]>(){
+    
+        @Override
+        
+        public int compare(int[] a, int[] b){
+        
+            return a[0] - b[0] ;
+            
+        }
+    };
+}
